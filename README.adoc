@@ -102,6 +102,6 @@ You can join the `*Bilyoner Demo - Postman Team*` via https://app.getpostman.com
 
 In case you encounter problems while joining, please check link:/coupon-api/src/main/resources/postman[this folder] to reach exported `*Postman*` collections.
 
-You can also check link:/coupon-api/src/test/java/com/bilyoner/assignment/couponapi/service[this folder] for unit tests.
+You can also check link:/coupon-api/src/test/java/com/bilyoner/assignment/couponapi[this folder] for unit tests.
 
 

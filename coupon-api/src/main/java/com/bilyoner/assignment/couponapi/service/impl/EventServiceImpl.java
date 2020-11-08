@@ -66,7 +66,7 @@ public class EventServiceImpl implements EventService {
         log.info("deleteEvent-end");
     }
 
-    protected List<EventEntity> getEventEntitiesByIds(List<Long> eventIds) {
+    public List<EventEntity> getEventEntitiesByIds(List<Long> eventIds) {
         log.info("getEventEntitiesByIds-begin {}", kv("eventIds", eventIds));
 
         List<EventEntity> response = eventRepository.findByIdIn(eventIds);

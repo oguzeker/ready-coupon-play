@@ -14,7 +14,9 @@ import com.bilyoner.assignment.couponapi.model.enums.CouponStatusEnum;
 import com.bilyoner.assignment.couponapi.model.enums.EventTypeEnum;
 import com.bilyoner.assignment.couponapi.repository.CouponRepository;
 import com.bilyoner.assignment.couponapi.repository.CouponSelectionRepository;
+import com.bilyoner.assignment.couponapi.service.BalanceService;
 import com.bilyoner.assignment.couponapi.service.CouponService;
+import com.bilyoner.assignment.couponapi.service.EventService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -22,6 +24,7 @@ import org.paukov.combinatorics3.Generator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
@@ -41,12 +44,10 @@ import static net.logstash.logback.argument.StructuredArguments.kv;
 public class CouponServiceImpl implements CouponService {
 
     private static final int DEFAULT_MBS = 0;
-    public static final int INDEX_FIRST = 0;
-    public static final int INDEX_SECOND = 1;
     private final CouponRepository couponRepository;
     private final CouponSelectionRepository couponSelectionRepository;
-    private final EventServiceImpl eventService;
-    private final BalanceServiceImpl balanceService;
+    private final EventService eventService;
+    private final BalanceService balanceService;
     private final CouponApiProperties properties;
     private final ModelMapper mapper;
 
@@ -160,6 +161,7 @@ public class CouponServiceImpl implements CouponService {
                 });
     }
 
+    @Transactional
     public List<CouponDTO> playCoupons(CouponPlayRequest couponPlayRequest) {
         log.info("playCoupons-begin {}", kv("couponPlayRequest", couponPlayRequest));
 
@@ -213,6 +215,7 @@ public class CouponServiceImpl implements CouponService {
                 });
     }
 
+    @Transactional
     public CouponDTO cancelCoupon(Long couponId) {
         log.info("cancelCoupon-begin {}", kv("couponId", couponId));
 
