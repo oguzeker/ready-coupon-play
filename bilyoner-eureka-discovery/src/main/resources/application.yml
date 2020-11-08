@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: bilyoner-eureka-discovery
+  main:
+    banner-mode: OFF
+
+server:
+  port: ${EUREKA_SERVER_PORT:8761}
+
+eureka:
+  instance:
+    hostname: bilyoner-eureka-discovery
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+
+logging:
+  level:
+    ROOT: INFO
+    com.netflix.eureka: 'OFF'
+  file:
+    max-history: 0
+    max-size: 1GB
+default:
+  locale: en_US

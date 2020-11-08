@@ -1,0 +1,59 @@
+server:
+  port: ${BALANCE_API_PORT:9090}
+
+spring:
+  application:
+    name: @application.name@
+  main:
+    banner-mode: OFF
+  jpa:
+    open-in-view: false
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: true
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: ${BALANCE_API_H2_USERNAME:sa}
+    password: ${BALANCE_API_H2_PASSWORD:%}
+
+redis:
+  host: ${REDIS_SERVER_URL:redis://localhost:6379}
+  threads: 8
+  netty-threads: 16
+  connection-minimum-idle-size: 1
+  connection-pool-size: 32
+  timeout: 30000
+
+eureka:
+  instance:
+    preferIpAddress: false
+    leaseRenewalIntervalInSeconds: 10
+    health-check-url-path: /actuator/health
+    metadata-map:
+      startup: ${random.int}
+  client:
+    registryFetchIntervalSeconds: 5
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761/eureka/}
+
+swagger:
+  api-info:
+    title: Bilyoner - Balance API Demo Application
+    description: In this web page, you can interact with API resources of Balance API Demo Application
+    version: 0.0.1-SNAPSHOT
+    terms-of-service-url: 'https://generator.lorem-ipsum.info/terms-and-conditions'
+    contact:
+      name: Oguz Erhan Eker
+      url: 'https://www.linkedin.com/in/oguzerhaneker/'
+      email: 'eker.oguz@gmail.com'
+    license: 'Apache License Version 2.0'
+    license-url: 'https://www.apache.org/licenses/LICENSE-2.0'
+    vendor-extensions:
+      -
+        name: Bilyoner
+        value: Balance API Demo Application

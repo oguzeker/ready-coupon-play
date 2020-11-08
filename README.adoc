@@ -1,0 +1,105 @@
+= Ready-Coupon-Play Demo Application
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+
+== * * *Please note that `Ready-Coupon-Play` is currently deployed to the cloud in the form of a `Docker Swarm` cluster.*
+
+You can directly access individual components of the cluster through the links in the <<components, Components>> section.
+
+== Summary
+
+This is a demo project implemented for `*Bilyoner*` interview rounds of *2020*. This is a just simple betting coupon sales application implemented only for demonstation purposes.
+
+The application generates `ready-made` coupons in accordance with the predefined gaming rules by using the events registered in the system. Users can list ready coupons and play or cancel them.
+
+== Motivation
+
+This application is implemented to manage betting coupon operations and to arrange user balance updates.
+
+== Code style
+
+This project uses https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller[`Model-View-Controller`] pattern for the directory structure and resposibility distribution among layers of abstraction.
+
+We deliberately chose not to employ https://en.wikipedia.org/wiki/Entity-control-boundary[`Entity-Control-Boundary`] pattern for practicality.
+
+image:https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat[js-standard-style]
+
+== Tech/framework used
+
+Project was built with the following technologies:
+
+- https://www.oracle.com/java/technologies/javase-jdk11-downloads.html[Java 11]
+- https://spring.io/projects/spring-boot[Spring-Boot]
+- https://github.com/Netflix/eureka/wiki/Eureka-at-a-glance[Eureka Service Discovery]
+- https://www.h2database.com/html/main.html[H2 Database Engine]
+- https://maven.apache.org/[Maven]
+- https://www.docker.com/[Docker]
+
+Please make sure that you have your local environment set up properly before installation and use.
+
+== Installation
+
+To build and run the application, you need to separately run the following commands at the root directory of the project:
+
+ mvn install
+
+ docker-compose up -d
+
+After that, run the following command to check and see the docker containers running in the background.
+
+  docker ps
+
+== Basic Flow
+
+On startup, the application populates the database with dummy data so as to make the demo application easier to test. Still, you can manually perform actions through the `Rest API`.
+
+== Components[[components]]
+
+This application comprises of *three* main components. *You can directly check each one of them via these links:*
+
+. http://68.183.53.25:9090/balances/1[`balance-api`]
+. http://68.183.53.25:9091/events/1[`coupon-api`]
+. http://68.183.53.25:8761[`bilyoner-eureka-discovery`]
+
+=== Scalability & Replication
+
+`Ready-Coupon-Play` is currently deployed to the cloud in the form of a `Docker Swarm` cluster.
+
+The swarm cluster consists of two nodes with the IPs below:
+
+ 68.183.53.25
+
+ 142.93.65.102
+
+`balance-api` and `coupon-api` are scaled up to only *one* replica for now. This is because we did not utilize a distributed database architecture (at least single separate DB instances per each service) for this demo application.
+
+To check service instances inside the cluster, please go to http://68.183.53.25:8761[`bilyoner-eureka-discovery`]
+
+=== Extra Features
+
+. *H2 Database Engine*
+* http://68.183.53.25:9090/h2-console/[`balance-api`]
+** JDBC URL: jdbc:h2:mem:testdb
+** Username: sa
+** Password: %
+* http://68.183.53.25:9091/h2-console/[`coupon-api`]
+** JDBC URL: jdbc:h2:mem:testdb
+** Username: sa
+** Password: %
+. *Swagger UI*
+* http://68.183.53.25:9090/swagger-ui.html[`balance-api`]
+* http://68.183.53.25:9091/swagger-ui.html[`coupon-api`]
+
+== Testing
+
+You can join the `*Postman Team*` via https://app.getpostman.com/join-team?invite_code=91b56dc12a1f28c3a76c7dc655a02253&ws=06fca326-b1de-4458-b2e8-ace0cb956c7d[this link].
+
+In case you encounter problems while joining, please check link:/coupon-api/src/main/resources/postman[this folder] to reach exported `*Postman*` collections:
+
+You can also check link:/coupon-api/src/test/java/com/bilyoner/assignment/couponapi/service[this folder] for unit tests.
+
+

@@ -1,0 +1,55 @@
+version: "3.8"
+
+services:
+   bilyoner-redis-server:
+      image: redis:6.0.9-alpine
+      container_name: bilyoner-redis-server
+      restart: always
+      ports:
+         - '6379:6379'
+      deploy:
+         replicas: 1
+
+   bilyoner-eureka-discovery:
+      image: bilyoner-eureka-discovery
+      build: ./bilyoner-eureka-discovery
+      container_name: bilyoner-eureka-discovery
+      restart: always
+      ports:
+         - '8761:8761'
+      environment:
+         EUREKA_SERVER_PORT: 8761
+      deploy:
+         replicas: 1
+
+   balance-api:
+      image: balance-api
+      build: ./balance-api
+      container_name: balance-api
+      ports:
+         - '9090:9090'
+      environment:
+         REDIS_SERVER_URL: redis://bilyoner-redis-server:6379
+         EUREKA_SERVER_URL: http://bilyoner-eureka-discovery:8761/eureka/
+         BALANCE_API_PORT: 9090
+         BALANCE_API_H2_USERNAME: sa
+         BALANCE_API_H2_PASSWORD: '%'
+      deploy:
+         replicas: 2
+      entrypoint: ["sh", "-c", "dockerize -wait tcp://bilyoner-redis-server:6379 -wait tcp://bilyoner-eureka-discovery:8761 -timeout 1500s -wait-retry-interval 20s java -Djava.security.egd=file:/dev/./urandom -jar balance-api-0.0.1-SNAPSHOT.jar"]
+
+   coupon-api:
+      image: coupon-api
+      build: ./coupon-api
+      container_name: coupon-api
+      ports:
+         - '9091:9091'
+      environment:
+         EUREKA_SERVER_URL: http://bilyoner-eureka-discovery:8761/eureka/
+         COUPON_API_PORT: 9091
+         COUPON_API_H2_USERNAME: sa
+         COUPON_API_H2_PASSWORD: '%'
+         BALANCES_API_URL: http://balance-api:9090
+      deploy:
+         replicas: 2
+      entrypoint: ["sh", "-c", "dockerize -wait tcp://bilyoner-redis-server:6379 -wait tcp://bilyoner-eureka-discovery:8761 -wait tcp://balance-api:9090 -timeout 1500s -wait-retry-interval 20s java -Djava.security.egd=file:/dev/./urandom -jar coupon-api-0.0.1-SNAPSHOT.jar"]
