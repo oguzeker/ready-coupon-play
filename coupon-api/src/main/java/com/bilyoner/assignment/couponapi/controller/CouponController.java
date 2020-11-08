@@ -22,7 +22,8 @@ import java.util.List;
 })
 public interface CouponController {
 
-    @ApiOperation(value = "Get All Coupons By Status", notes = "This endpoint retrieves coupons by their status")
+    @ApiOperation(value = "Get All Coupons By Status",
+            notes = "This endpoint retrieves coupons by their status (with Pagination)")
     ResponseEntity<Page<CouponDTO>> getAllCouponsByCouponStatus(
             @ApiParam(value = "Status of the coupon entity", example = "CREATED")
             @RequestParam CouponStatusEnum couponStatus,

@@ -19,7 +19,7 @@ import javax.validation.Valid;
 })
 public interface EventController {
 
-    @ApiOperation(value = "Get All Events", notes = "This endpoint retrieves all events")
+    @ApiOperation(value = "Get All Events", notes = "This endpoint retrieves all events (with Pagination)")
     ResponseEntity<Page<EventDTO>> getAllEvents(
             @ApiParam(value = "Index of the requested page of bulk results", example = "0") @RequestParam int pageIndex,
             @ApiParam(value = "Size of the requested page of bulk results", example = "10") @RequestParam int pageSize);

@@ -1,0 +1,58 @@
+{
+	"info": {
+		"_postman_id": "7c30bfa0-c2ca-45d7-86d3-779ee19cb788",
+		"name": "Balance",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get User Balance and History Records",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:{{balance_port}}/balances/1",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{balance_port}}",
+					"path": [
+						"balances",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User Balance",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"userId\": 1,\n  \"amount\": 5,\n  \"transactionId\": \"15ae51ab-bd23-4a88-925b-fb660c2b1581\",\n  \"transactionType\": \"WITHDRAW\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}:{{balance_port}}/balances",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{balance_port}}",
+					"path": [
+						"balances"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

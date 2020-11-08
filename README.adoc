@@ -65,6 +65,21 @@ This application comprises of *three* main components. *You can directly check e
 . http://68.183.53.25:9091/events/1[`coupon-api`]
 . http://68.183.53.25:8761[`bilyoner-eureka-discovery`]
 
+=== Extra Features
+
+. *Swagger UI*[[swagger-ui]]
+* http://68.183.53.25:9090/swagger-ui.html[`balance-api`]
+* http://68.183.53.25:9091/swagger-ui.html[`coupon-api`]
+. *H2 Database Engine*
+* http://68.183.53.25:9090/h2-console/[`balance-api`]
+** JDBC URL: jdbc:h2:mem:testdb
+** Username: sa
+** Password: %
+* http://68.183.53.25:9091/h2-console/[`coupon-api`]
+** JDBC URL: jdbc:h2:mem:testdb
+** Username: sa
+** Password: %
+
 === Scalability & Replication
 
 `Ready-Coupon-Play` is currently deployed to the cloud in the form of a `Docker Swarm` cluster.
@@ -75,30 +90,17 @@ The swarm cluster consists of two nodes with the IPs below:
 
  142.93.65.102
 
-`balance-api` and `coupon-api` are scaled up to only *one* replica for now. This is because we did not utilize a distributed database architecture (at least single separate DB instances per each service) for this demo application.
+`balance-api` and `coupon-api` services are scaled up to only *one* replica for now. This is because we did not utilize a distributed database architecture (at least single separate DB instances per each service) for this demo application.
 
 To check service instances inside the cluster, please go to http://68.183.53.25:8761[`bilyoner-eureka-discovery`]
 
-=== Extra Features
-
-. *H2 Database Engine*
-* http://68.183.53.25:9090/h2-console/[`balance-api`]
-** JDBC URL: jdbc:h2:mem:testdb
-** Username: sa
-** Password: %
-* http://68.183.53.25:9091/h2-console/[`coupon-api`]
-** JDBC URL: jdbc:h2:mem:testdb
-** Username: sa
-** Password: %
-. *Swagger UI*
-* http://68.183.53.25:9090/swagger-ui.html[`balance-api`]
-* http://68.183.53.25:9091/swagger-ui.html[`coupon-api`]
-
 == Testing
 
-You can join the `*Postman Team*` via https://app.getpostman.com/join-team?invite_code=91b56dc12a1f28c3a76c7dc655a02253&ws=06fca326-b1de-4458-b2e8-ace0cb956c7d[this link].
+You can always interact with the `Rest API` resources of the application through <<swagger-ui, `*Swagger UI*`>>
 
-In case you encounter problems while joining, please check link:/coupon-api/src/main/resources/postman[this folder] to reach exported `*Postman*` collections:
+You can join the `*Bilyoner Demo - Postman Team*` via https://app.getpostman.com/join-team?invite_code=6e35430ab825d4b43af0591e8f08d5ff&ws=46cf6055-6fc1-449f-ac40-b3075e7ca3ef[this link].
+
+In case you encounter problems while joining, please check link:/coupon-api/src/main/resources/postman[this folder] to reach exported `*Postman*` collections.
 
 You can also check link:/coupon-api/src/test/java/com/bilyoner/assignment/couponapi/service[this folder] for unit tests.
 

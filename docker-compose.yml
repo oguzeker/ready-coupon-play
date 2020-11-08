@@ -35,7 +35,7 @@ services:
          BALANCE_API_H2_USERNAME: sa
          BALANCE_API_H2_PASSWORD: '%'
       deploy:
-         replicas: 2
+         replicas: 1
       entrypoint: ["sh", "-c", "dockerize -wait tcp://bilyoner-redis-server:6379 -wait tcp://bilyoner-eureka-discovery:8761 -timeout 1500s -wait-retry-interval 20s java -Djava.security.egd=file:/dev/./urandom -jar balance-api-0.0.1-SNAPSHOT.jar"]
 
    coupon-api:
@@ -51,5 +51,5 @@ services:
          COUPON_API_H2_PASSWORD: '%'
          BALANCES_API_URL: http://balance-api:9090
       deploy:
-         replicas: 2
+         replicas: 1
       entrypoint: ["sh", "-c", "dockerize -wait tcp://bilyoner-redis-server:6379 -wait tcp://bilyoner-eureka-discovery:8761 -wait tcp://balance-api:9090 -timeout 1500s -wait-retry-interval 20s java -Djava.security.egd=file:/dev/./urandom -jar coupon-api-0.0.1-SNAPSHOT.jar"]

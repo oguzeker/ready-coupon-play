@@ -81,11 +81,11 @@ public class BalanceServiceImpl implements BalanceService {
                                                  TransactionTypeEnum transactionType) {
         BigDecimal newBalanceAmount = currentBalanceAmount;
         switch (transactionType) {
+            case REFUND:
             case DEPOSIT:
                 newBalanceAmount = newBalanceAmount.add(balanceChange);
                 break;
             case WITHDRAW:
-            case REFUND:
                 checkBalanceSufficient(currentBalanceAmount, balanceChange);
                 newBalanceAmount = newBalanceAmount.subtract(balanceChange);
                 break;
